@@ -1,0 +1,26 @@
+from telethon.sync import TelegramClient
+# api_id and api_hash you must take from https://my.telegram.org/. Create your app (any) and get it.
+api_id =                                    # Your api_id in int format (for example, 1234567)
+api_hash =                                  # Your api_hash in str format (for example, 'deadbeef1337600613')
+username =                                  # Session name in str format (for example, 'Anon')
+counter_deleted_message = 0
+client = TelegramClient(username, api_id, api_hash)
+client.start()
+dialog_array = {}
+
+for dialog in client.iter_dialogs():
+    dialog_array[dialog.id] = dialog.name
+
+print("You are currently in the following chats:")
+for dialog in client.iter_dialogs():
+    print('"{}" with ID {}'.format(dialog.name, dialog.id))
+
+print()
+chat = int(input('Enter chat ID to remove your chat messages: '))
+print()
+
+for message in client.iter_messages(chat, from_user='me'):
+    if message.raw_text is not None:
+        counter_deleted_message += 1
+        client.delete_messages(chat, message)
+print('Deleted {} post(s) from chat "{}"'.format(counter_deleted_message, dialog_array[chat]))
