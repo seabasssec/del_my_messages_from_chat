@@ -15,12 +15,16 @@ print("You are currently in the following chats:")
 for dialog in client.iter_dialogs():
     print('"{}" with ID {}'.format(dialog.name, dialog.id))
 
-print()
-chat = int(input('Enter chat ID to remove your chat messages: '))
-print()
-
-for message in client.iter_messages(chat, from_user='me'):
-    if message.raw_text is not None:
-        client.delete_messages(chat, message)
-        counter_deleted_message += 1
-print('Deleted {} post(s) from chat "{}"'.format(counter_deleted_message, dialog_array[chat]))
+while True:
+    print()
+    chat = int(input('Enter chat ID to remove your chat messages or "0" (without quotes) for exit: '))
+    print()
+    if chat == 0:
+        print('Bye bye!')
+        break
+    else:
+        for message in client.iter_messages(chat, from_user='me'):
+            if message.raw_text is not None:
+                counter_deleted_message += 1
+                client.delete_messages(chat, message)
+        print('Deleted {} post(s) from chat "{}"'.format(counter_deleted_message, dialog_array[chat]))
