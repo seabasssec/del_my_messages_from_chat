@@ -25,6 +25,6 @@ while True:
     else:
         for message in client.iter_messages(chat, from_user='me'):
             if message.raw_text is not None:
-                counter_deleted_message += 1
                 client.delete_messages(chat, message)
+                counter_deleted_message += 1
         print('Deleted {} post(s) from chat "{}"'.format(counter_deleted_message, dialog_array[chat]))
