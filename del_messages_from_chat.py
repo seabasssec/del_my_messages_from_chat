@@ -28,3 +28,4 @@ while True:
                 client.delete_messages(chat, message)
                 counter_deleted_message += 1
         print('Deleted {} post(s) from chat "{}"'.format(counter_deleted_message, dialog_array[chat]))
+        counter_deleted_message = 0
