@@ -13,8 +13,13 @@ for dialog in client.iter_dialogs():
 
 print("You are currently in the following chats:")
 for dialog in client.iter_dialogs():
-    print('"{}" with ID {}'.format(dialog.name, dialog.id))
-
+    message_counter = 0
+    
+    for message in client.iter_messages(dialog.id, from_user='me'):
+        message_counter += 1
+    print('"{}" with ID {} contains \033[31m\033[43m {} \033[0m of your message(s)'.format(dialog.name, dialog.id, message_counter))
+    message_counter = 0
+    
 while True:
     print()
     chat = int(input('Enter chat ID to remove your chat messages or "0" (without quotes) for exit: '))
