@@ -30,7 +30,11 @@ while True:
     else:
         for message in client.iter_messages(chat, from_user='me'):
             if message.raw_text is not None:
-                client.delete_messages(chat, message)
-                counter_deleted_message += 1
+                try:
+                    client.delete_messages(chat, message)
+                    counter_deleted_message += 1
+                except errors.FloodWaitError as e:
+                    print('Have to sleep', e.seconds, 'seconds')
+                    time.sleep(e.seconds)    
         print('Deleted {} post(s) from chat "{}"'.format(counter_deleted_message, dialog_array[chat]))
         counter_deleted_message = 0
